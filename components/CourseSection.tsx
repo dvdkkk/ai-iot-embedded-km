@@ -358,11 +358,9 @@ export const CourseSection: React.FC = () => {
         {/* Education Inquiry Button */}
         <Reveal className="w-full mt-20 flex justify-center">
           <a
-            href="#consultation"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('consultation')?.scrollIntoView({ behavior: 'smooth' });
-            }}
+            href="https://naver.me/GuCYbZUe"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-purple-800 via-purple-700 to-indigo-800 text-white font-bold text-base sm:text-lg px-8 sm:px-10 py-4 rounded-full shadow-[0_0_30px_rgba(147,51,234,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.6)] hover:scale-105 transition-all duration-300"
           >
             <span>과정 상담 및 국비지원 신청하기</span>

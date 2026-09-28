@@ -41,8 +41,16 @@ export const Navigation: React.FC = () => {
     { name: '취업지원', href: '#employment-support' },
     { name: '취업현황', href: '#employment' },
     { name: '수강후기', href: '#reviews' },
-    { name: '상담신청', href: '#consultation' },
+    { name: '상담신청', href: 'https://naver.me/GuCYbZUe', isExternal: true },
   ];
+
+  const handlePhoneClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 1024;
+    if (!isMobile) {
+      e.preventDefault();
+      window.open('https://naver.me/GuCYbZUe', '_blank', 'noopener,noreferrer');
+    }
+  };
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md py-4 shadow-lg border-b border-gray-800' : 'bg-transparent py-6'}`}>
@@ -61,10 +69,15 @@ export const Navigation: React.FC = () => {
             <a 
               key={link.name} 
               href={link.href} 
-              onClick={(e) => handleNavClick(e, link.href)}
+              target={link.isExternal ? '_blank' : undefined}
+              rel={link.isExternal ? 'noopener noreferrer' : undefined}
+              onClick={(e) => {
+                if (link.isExternal) return;
+                handleNavClick(e, link.href);
+              }}
               className={`text-lg font-medium transition-colors ${
                 link.name === '상담신청' 
-                  ? 'text-purple-800 font-bold' 
+                  ? 'text-purple-800 font-bold hover:text-purple-700' 
                   : 'text-gray-300 hover:text-purple-800'
               }`}
             >
@@ -73,11 +86,9 @@ export const Navigation: React.FC = () => {
           ))}
           <a 
             href="tel:16619726" 
-            onClick={(e) => {
-              const isPc = window.innerWidth >= 1024;
-              if (isPc) handleNavClick(e, '#consultation');
-            }}
-            className="flex items-center gap-2 bg-purple-800 text-black px-5 py-2 rounded-full font-bold text-lg hover:bg-purple-700 transition-transform hover:scale-105"
+            onClick={handlePhoneClick}
+            title="클릭 시 온라인 상담 신청 페이지로 이동합니다"
+            className="flex items-center gap-2 bg-purple-800 text-white px-5 py-2 rounded-full font-bold text-lg hover:bg-purple-700 transition-transform hover:scale-105 cursor-pointer"
           >
             <PhoneCall size={20} />
             1661-9726
@@ -97,20 +108,30 @@ export const Navigation: React.FC = () => {
             <a 
               key={link.name} 
               href={link.href} 
+              target={link.isExternal ? '_blank' : undefined}
+              rel={link.isExternal ? 'noopener noreferrer' : undefined}
               className={`text-base font-medium py-2 border-b border-zinc-800 ${
                 link.name === '상담신청' 
                   ? 'text-purple-800 font-bold' 
                   : 'text-gray-300 hover:text-purple-800'
               }`}
-              onClick={(e) => handleNavClick(e, link.href)}
+              onClick={(e) => {
+                if (link.isExternal) {
+                  setIsMobileMenuOpen(false);
+                  return;
+                }
+                handleNavClick(e, link.href);
+              }}
             >
               {link.name}
             </a>
           ))}
           <a 
-            href="#consultation" 
-            className="bg-purple-800 text-black text-center py-3 rounded-md font-bold text-sm"
-            onClick={(e) => handleNavClick(e, '#consultation')}
+            href="https://naver.me/GuCYbZUe" 
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-purple-800 text-white text-center py-3 rounded-md font-bold text-sm hover:bg-purple-700 transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
             무료상담 신청하기
           </a>
